@@ -1,0 +1,202 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "APIPlanilla",
+        "version": "1.0.0",
+        "description": "Planilla de SEFIN"
+    },
+    "paths": {
+        "/plani/generarplanilla": {
+            "servers": [
+                {
+                    "url": "http://localhost:8081/api",
+                    "description": ""
+                }
+            ],
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Empleado"
+                                }
+                            },
+                            "examples": {
+                                "Empleado": {
+                                    "value": [
+                                        {
+                                            "Id": 84.29,
+                                            "nombre": "some text",
+                                            "apellido": "some text",
+                                            "salario": 87.37
+                                        },
+                                        {
+                                            "Id": 23.29,
+                                            "nombre": "some text",
+                                            "apellido": "some text",
+                                            "salario": 71.35
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "PLANILLA"
+                ],
+                "parameters": [
+                    {
+                        "name": "anio",
+                        "description": "",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "mes",
+                        "description": "",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/rsPlanilla"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/rsError"
+                    }
+                },
+                "summary": "Generar planilla"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Empleado": {
+                "description": "Entidad empleado",
+                "required": [
+                ],
+                "type": "object",
+                "properties": {
+                    "Id": {
+                        "description": "Id del empleado",
+                        "type": "number"
+                    },
+                    "nombre": {
+                        "description": "Nombre del empleado",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    },
+                    "salario": {
+                        "format": "double",
+                        "description": "Salario del empleado",
+                        "type": "number"
+                    }
+                }
+            },
+            "Planilla": {
+                "description": "Planilla de SEFIN",
+                "type": "object",
+                "properties": {
+                    "anio": {
+                        "description": "Anio de la planilla",
+                        "type": "number"
+                    },
+                    "lstEmpleados": {
+                        "description": "Listado de empleados",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Empleado"
+                        }
+                    },
+                    "totalPlanilla": {
+                        "format": "double",
+                        "description": "Total de la planilla",
+                        "type": "number"
+                    },
+                    "mes": {
+                        "description": "Mes de la planilla",
+                        "type": "number"
+                    }
+                }
+            },
+            "msjError": {
+                "description": "Mensaje de error",
+                "type": "object",
+                "properties": {
+                    "codigoError": {
+                        "description": "Codigo del error",
+                        "type": "string"
+                    },
+                    "mensaje": {
+                        "description": "Mensaje del error",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "rsPlanilla": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Planilla"
+                        },
+                        "examples": {
+                            "Planilla": {
+                                "value": {
+                                    "anio": 28.15,
+                                    "lstEmpleados": [
+                                        {
+                                            "Id": 32.96,
+                                            "nombre": "some text",
+                                            "apellido": "some text",
+                                            "salario": 43.13
+                                        },
+                                        {
+                                            "Id": 43.21,
+                                            "nombre": "some text",
+                                            "apellido": "some text",
+                                            "salario": 51.12
+                                        }
+                                    ],
+                                    "totalPlanilla": 2.37,
+                                    "mes": 75.53
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "rsError": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/msjError"
+                        },
+                        "examples": {
+                            "msjError": {
+                                "value": {
+                                    "codigoError": "some text",
+                                    "mensaje": "some text"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            }
+        }
+    }
+}
